@@ -1,0 +1,615 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		26B76AB825DB68B2007098BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B76AB725DB68B2007098BB /* AppDelegate.swift */; };
+		26B76ABA25DB68B2007098BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B76AB925DB68B2007098BB /* SceneDelegate.swift */; };
+		26B76ABC25DB68B2007098BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B76ABB25DB68B2007098BB /* ViewController.swift */; };
+		26B76ABF25DB68B2007098BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26B76ABD25DB68B2007098BB /* Main.storyboard */; };
+		26B76AC225DB68B2007098BB /* Tradewithupbit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26B76AC025DB68B2007098BB /* Tradewithupbit.xcdatamodeld */; };
+		26B76AC425DB68B5007098BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26B76AC325DB68B5007098BB /* Assets.xcassets */; };
+		26B76AC725DB68B5007098BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26B76AC525DB68B5007098BB /* LaunchScreen.storyboard */; };
+		26B76AD225DB68B5007098BB /* TradewithupbitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B76AD125DB68B5007098BB /* TradewithupbitTests.swift */; };
+		26B76ADD25DB68B5007098BB /* TradewithupbitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B76ADC25DB68B5007098BB /* TradewithupbitUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		26B76ACE25DB68B5007098BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26B76AAC25DB68B2007098BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 26B76AB325DB68B2007098BB;
+			remoteInfo = Tradewithupbit;
+		};
+		26B76AD925DB68B5007098BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 26B76AAC25DB68B2007098BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 26B76AB325DB68B2007098BB;
+			remoteInfo = Tradewithupbit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		26B76AB425DB68B2007098BB /* Tradewithupbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tradewithupbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		26B76AB725DB68B2007098BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		26B76AB925DB68B2007098BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		26B76ABB25DB68B2007098BB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		26B76ABE25DB68B2007098BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		26B76AC125DB68B2007098BB /* Tradewithupbit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tradewithupbit.xcdatamodel; sourceTree = "<group>"; };
+		26B76AC325DB68B5007098BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		26B76AC625DB68B5007098BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		26B76AC825DB68B5007098BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		26B76ACD25DB68B5007098BB /* TradewithupbitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradewithupbitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		26B76AD125DB68B5007098BB /* TradewithupbitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradewithupbitTests.swift; sourceTree = "<group>"; };
+		26B76AD325DB68B5007098BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		26B76AD825DB68B5007098BB /* TradewithupbitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradewithupbitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		26B76ADC25DB68B5007098BB /* TradewithupbitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradewithupbitUITests.swift; sourceTree = "<group>"; };
+		26B76ADE25DB68B5007098BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		26B76AB125DB68B2007098BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26B76ACA25DB68B5007098BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26B76AD525DB68B5007098BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		26B76AAB25DB68B2007098BB = {
+			isa = PBXGroup;
+			children = (
+				26B76AB625DB68B2007098BB /* Tradewithupbit */,
+				26B76AD025DB68B5007098BB /* TradewithupbitTests */,
+				26B76ADB25DB68B5007098BB /* TradewithupbitUITests */,
+				26B76AB525DB68B2007098BB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		26B76AB525DB68B2007098BB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				26B76AB425DB68B2007098BB /* Tradewithupbit.app */,
+				26B76ACD25DB68B5007098BB /* TradewithupbitTests.xctest */,
+				26B76AD825DB68B5007098BB /* TradewithupbitUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		26B76AB625DB68B2007098BB /* Tradewithupbit */ = {
+			isa = PBXGroup;
+			children = (
+				26B76AB725DB68B2007098BB /* AppDelegate.swift */,
+				26B76AB925DB68B2007098BB /* SceneDelegate.swift */,
+				26B76ABB25DB68B2007098BB /* ViewController.swift */,
+				26B76ABD25DB68B2007098BB /* Main.storyboard */,
+				26B76AC325DB68B5007098BB /* Assets.xcassets */,
+				26B76AC525DB68B5007098BB /* LaunchScreen.storyboard */,
+				26B76AC825DB68B5007098BB /* Info.plist */,
+				26B76AC025DB68B2007098BB /* Tradewithupbit.xcdatamodeld */,
+			);
+			path = Tradewithupbit;
+			sourceTree = "<group>";
+		};
+		26B76AD025DB68B5007098BB /* TradewithupbitTests */ = {
+			isa = PBXGroup;
+			children = (
+				26B76AD125DB68B5007098BB /* TradewithupbitTests.swift */,
+				26B76AD325DB68B5007098BB /* Info.plist */,
+			);
+			path = TradewithupbitTests;
+			sourceTree = "<group>";
+		};
+		26B76ADB25DB68B5007098BB /* TradewithupbitUITests */ = {
+			isa = PBXGroup;
+			children = (
+				26B76ADC25DB68B5007098BB /* TradewithupbitUITests.swift */,
+				26B76ADE25DB68B5007098BB /* Info.plist */,
+			);
+			path = TradewithupbitUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		26B76AB325DB68B2007098BB /* Tradewithupbit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26B76AE125DB68B5007098BB /* Build configuration list for PBXNativeTarget "Tradewithupbit" */;
+			buildPhases = (
+				26B76AB025DB68B2007098BB /* Sources */,
+				26B76AB125DB68B2007098BB /* Frameworks */,
+				26B76AB225DB68B2007098BB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tradewithupbit;
+			productName = Tradewithupbit;
+			productReference = 26B76AB425DB68B2007098BB /* Tradewithupbit.app */;
+			productType = "com.apple.product-type.application";
+		};
+		26B76ACC25DB68B5007098BB /* TradewithupbitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26B76AE425DB68B5007098BB /* Build configuration list for PBXNativeTarget "TradewithupbitTests" */;
+			buildPhases = (
+				26B76AC925DB68B5007098BB /* Sources */,
+				26B76ACA25DB68B5007098BB /* Frameworks */,
+				26B76ACB25DB68B5007098BB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				26B76ACF25DB68B5007098BB /* PBXTargetDependency */,
+			);
+			name = TradewithupbitTests;
+			productName = TradewithupbitTests;
+			productReference = 26B76ACD25DB68B5007098BB /* TradewithupbitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		26B76AD725DB68B5007098BB /* TradewithupbitUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26B76AE725DB68B5007098BB /* Build configuration list for PBXNativeTarget "TradewithupbitUITests" */;
+			buildPhases = (
+				26B76AD425DB68B5007098BB /* Sources */,
+				26B76AD525DB68B5007098BB /* Frameworks */,
+				26B76AD625DB68B5007098BB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				26B76ADA25DB68B5007098BB /* PBXTargetDependency */,
+			);
+			name = TradewithupbitUITests;
+			productName = TradewithupbitUITests;
+			productReference = 26B76AD825DB68B5007098BB /* TradewithupbitUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		26B76AAC25DB68B2007098BB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					26B76AB325DB68B2007098BB = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					26B76ACC25DB68B5007098BB = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 26B76AB325DB68B2007098BB;
+					};
+					26B76AD725DB68B5007098BB = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 26B76AB325DB68B2007098BB;
+					};
+				};
+			};
+			buildConfigurationList = 26B76AAF25DB68B2007098BB /* Build configuration list for PBXProject "Tradewithupbit" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 26B76AAB25DB68B2007098BB;
+			productRefGroup = 26B76AB525DB68B2007098BB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				26B76AB325DB68B2007098BB /* Tradewithupbit */,
+				26B76ACC25DB68B5007098BB /* TradewithupbitTests */,
+				26B76AD725DB68B5007098BB /* TradewithupbitUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		26B76AB225DB68B2007098BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26B76AC725DB68B5007098BB /* LaunchScreen.storyboard in Resources */,
+				26B76AC425DB68B5007098BB /* Assets.xcassets in Resources */,
+				26B76ABF25DB68B2007098BB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26B76ACB25DB68B5007098BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26B76AD625DB68B5007098BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		26B76AB025DB68B2007098BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26B76ABC25DB68B2007098BB /* ViewController.swift in Sources */,
+				26B76AB825DB68B2007098BB /* AppDelegate.swift in Sources */,
+				26B76ABA25DB68B2007098BB /* SceneDelegate.swift in Sources */,
+				26B76AC225DB68B2007098BB /* Tradewithupbit.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26B76AC925DB68B5007098BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26B76AD225DB68B5007098BB /* TradewithupbitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		26B76AD425DB68B5007098BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26B76ADD25DB68B5007098BB /* TradewithupbitUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		26B76ACF25DB68B5007098BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 26B76AB325DB68B2007098BB /* Tradewithupbit */;
+			targetProxy = 26B76ACE25DB68B5007098BB /* PBXContainerItemProxy */;
+		};
+		26B76ADA25DB68B5007098BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 26B76AB325DB68B2007098BB /* Tradewithupbit */;
+			targetProxy = 26B76AD925DB68B5007098BB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		26B76ABD25DB68B2007098BB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				26B76ABE25DB68B2007098BB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		26B76AC525DB68B5007098BB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				26B76AC625DB68B5007098BB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		26B76ADF25DB68B5007098BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		26B76AE025DB68B5007098BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		26B76AE225DB68B5007098BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J9G7LUHM5U;
+				INFOPLIST_FILE = Tradewithupbit/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hdtel.tradewithupbit.Tradewithupbit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		26B76AE325DB68B5007098BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J9G7LUHM5U;
+				INFOPLIST_FILE = Tradewithupbit/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hdtel.tradewithupbit.Tradewithupbit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		26B76AE525DB68B5007098BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J9G7LUHM5U;
+				INFOPLIST_FILE = TradewithupbitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hdtel.tradewithupbit.TradewithupbitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tradewithupbit.app/Tradewithupbit";
+			};
+			name = Debug;
+		};
+		26B76AE625DB68B5007098BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J9G7LUHM5U;
+				INFOPLIST_FILE = TradewithupbitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hdtel.tradewithupbit.TradewithupbitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tradewithupbit.app/Tradewithupbit";
+			};
+			name = Release;
+		};
+		26B76AE825DB68B5007098BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J9G7LUHM5U;
+				INFOPLIST_FILE = TradewithupbitUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hdtel.tradewithupbit.TradewithupbitUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tradewithupbit;
+			};
+			name = Debug;
+		};
+		26B76AE925DB68B5007098BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J9G7LUHM5U;
+				INFOPLIST_FILE = TradewithupbitUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hdtel.tradewithupbit.TradewithupbitUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tradewithupbit;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		26B76AAF25DB68B2007098BB /* Build configuration list for PBXProject "Tradewithupbit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26B76ADF25DB68B5007098BB /* Debug */,
+				26B76AE025DB68B5007098BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		26B76AE125DB68B5007098BB /* Build configuration list for PBXNativeTarget "Tradewithupbit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26B76AE225DB68B5007098BB /* Debug */,
+				26B76AE325DB68B5007098BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		26B76AE425DB68B5007098BB /* Build configuration list for PBXNativeTarget "TradewithupbitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26B76AE525DB68B5007098BB /* Debug */,
+				26B76AE625DB68B5007098BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		26B76AE725DB68B5007098BB /* Build configuration list for PBXNativeTarget "TradewithupbitUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26B76AE825DB68B5007098BB /* Debug */,
+				26B76AE925DB68B5007098BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		26B76AC025DB68B2007098BB /* Tradewithupbit.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				26B76AC125DB68B2007098BB /* Tradewithupbit.xcdatamodel */,
+			);
+			currentVersion = 26B76AC125DB68B2007098BB /* Tradewithupbit.xcdatamodel */;
+			path = Tradewithupbit.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 26B76AAC25DB68B2007098BB /* Project object */;
+}
