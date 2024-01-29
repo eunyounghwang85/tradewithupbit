@@ -14,6 +14,7 @@ class WebSocketManager : NSObject {
     static let shared: WebSocketManager = {
         return WebSocketManager()
     }()
+  
     lazy var barrierQueue = DispatchQueue(label: MAINSIGN.appending(".heyWebSocket.Barrier.DispatchQueue"), attributes: .concurrent)
     lazy var keyint:NSInteger = 0
     // quemanager
@@ -50,20 +51,54 @@ class WebSocketManager : NSObject {
   
     override init() {
         super.init()
+       
+        // addobserver
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name:  UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification(_:)), name:  UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willTerminateNotification(_:)), name:  UIApplication.willTerminateNotification, object: nil)
         
-        var request = URLRequest(url: URL(string: "wss://api.upbit.com/websocket/v1")!)
-        request.timeoutInterval = 5
-        self.socket =  WebSocket(request: request)
-        
+      
     }
     
     deinit {
+        self.closeSocket(true)
         self.cancelAlloperation()
         NotificationCenter.default.removeObserver(self)
     }
-    
+    func commitIntial(){
+        guard let socket = self.socket else {
+            var request = URLRequest(url: URL(string: "wss://api.upbit.com/websocket/v1")!)
+            request.timeoutInterval = 60
+            
+            if isauthorizationToken {
+                request.allHTTPHeaderFields = AuthorizationHeader()
+                //let compression = WSCompression()
+                self.socket =  WebSocket(request: request, useCustomEngine: true)
+            }else{
+                self.socket =  WebSocket(request: request)
+            }
+            return
+        }
+        
+        guard !self.isConnected else {
+            return
+        }
+        
+        socket.connect()
+    }
+    func closeSocket(_ isforce:Bool=false) {
+        guard let socket = self.socket else {
+            return
+        }
+        guard isforce else {
+            
+            socket.disconnect()
+            
+            return
+        }
+        socket.forceDisconnect()
+        self.socket = nil
+    }
     func cancelAlloperation() {
         
         
@@ -80,17 +115,24 @@ class WebSocketManager : NSObject {
     
     // MARK: applicationDidEnterBackground
     @objc func applicationDidEnterBackground(_ notification: NSNotification?){
-        Log("mqttManager <<applicationDidEnterBackground>>")
+        Log("\(notification?.name.rawValue ?? "applicationDidEnterBackground")")
         self.webSocketQueue.isSuspended = true
-        
+        self.closeSocket()
     }
     
     @objc func applicationDidBecomeActiveNotification(_ notification: NSNotification?){
-        Log("mqttManager <<applicationDidBecomeActiveNotification>>")
+        Log("\(notification?.name.rawValue ?? "applicationDidBecomeActiveNotification")")
         self.webSocketQueue.isSuspended = false
+        self.commitIntial()
     }
    
-    
+    @objc func willTerminateNotification(_ notification: NSNotification?){
+        Log("\(notification?.name.rawValue ?? "willTerminateNotification")")
+        self.webSocketQueue.isSuspended = false
+        self.closeSocket(true)
+        self.cancelAlloperation()
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension WebSocketManager  :  WebSocketDelegate {
@@ -100,21 +142,7 @@ extension WebSocketManager  :  WebSocketDelegate {
         case .connected(let headers):
             isConnected = true
             print("websocket is connected: \(headers)")
-            self.socket?.write(string: "[\n" +
-                               "  {\n" +
-                               "    \"ticket\": \"test example\"\n" +
-                               "  },\n" +
-                               "  {\n" +
-                               "    \"type\": \"ticker\",\n" +
-                               "    \"codes\": [\n" +
-                               "      \"KRW-BTC\",\n" +
-                               "      \"KRW-ETH\"\n" +
-                               "    ]\n" +
-                               "  },\n" +
-                               "  {\n" +
-                               "    \"format\": \"DEFAULT\"\n" +
-                               "  }\n" +
-                               "]", completion:nil)
+            self.socket?.write(string: "[{\"ticket\":\"hey\"},{\"type\":\"ticker\",\"codes\":[\"KRW-BTC\"]}]", completion:nil)
 
         case .disconnected(let reason, let code):
             isConnected = false
@@ -140,7 +168,7 @@ extension WebSocketManager  :  WebSocketDelegate {
             isConnected = false
             Log(String(describing: error))
             //handleError(error)
-            case .peerClosed:
+        case .peerClosed:
                    break
         }
     }

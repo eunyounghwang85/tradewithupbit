@@ -19,6 +19,8 @@
 		555368892B67587E0074DAA1 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555368882B67587E0074DAA1 /* Util.swift */; };
 		5553688B2B6758B70074DAA1 /* appString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5553688A2B6758B70074DAA1 /* appString.swift */; };
 		555368982B675E940074DAA1 /* privacyToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = 555368972B675E940074DAA1 /* privacyToken.plist */; };
+		5553689B2B676D800074DAA1 /* authParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5553689A2B676D800074DAA1 /* authParam.swift */; };
+		5553689E2B678A2E0074DAA1 /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = 5553689D2B678A2E0074DAA1 /* SwiftJWT */; };
 		557DDE8F2B6723B200BC61F8 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 557DDE8E2B6723B200BC61F8 /* Starscream */; };
 		557DDE912B6723FF00BC61F8 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */; };
 /* End PBXBuildFile section */
@@ -59,6 +61,7 @@
 		555368882B67587E0074DAA1 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		5553688A2B6758B70074DAA1 /* appString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appString.swift; sourceTree = "<group>"; };
 		555368972B675E940074DAA1 /* privacyToken.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = privacyToken.plist; sourceTree = "<group>"; };
+		5553689A2B676D800074DAA1 /* authParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = authParam.swift; sourceTree = "<group>"; };
 		557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5553689E2B678A2E0074DAA1 /* SwiftJWT in Frameworks */,
 				557DDE8F2B6723B200BC61F8 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,10 +116,11 @@
 			isa = PBXGroup;
 			children = (
 				26B76AB725DB68B2007098BB /* AppDelegate.swift */,
-				555368962B675E940074DAA1 /* private */,
 				26B76AB925DB68B2007098BB /* SceneDelegate.swift */,
 				26B76ABB25DB68B2007098BB /* ViewController.swift */,
 				557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */,
+				555368992B676C260074DAA1 /* upbitApi */,
+				555368962B675E940074DAA1 /* private */,
 				555368872B67586C0074DAA1 /* util */,
 				26B76ABD25DB68B2007098BB /* Main.storyboard */,
 				26B76AC325DB68B5007098BB /* Assets.xcassets */,
@@ -161,6 +166,14 @@
 			path = private;
 			sourceTree = SOURCE_ROOT;
 		};
+		555368992B676C260074DAA1 /* upbitApi */ = {
+			isa = PBXGroup;
+			children = (
+				5553689A2B676D800074DAA1 /* authParam.swift */,
+			);
+			path = upbitApi;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -179,6 +192,7 @@
 			name = Tradewithupbit;
 			packageProductDependencies = (
 				557DDE8E2B6723B200BC61F8 /* Starscream */,
+				5553689D2B678A2E0074DAA1 /* SwiftJWT */,
 			);
 			productName = Tradewithupbit;
 			productReference = 26B76AB425DB68B2007098BB /* Tradewithupbit.app */;
@@ -253,6 +267,7 @@
 			mainGroup = 26B76AAB25DB68B2007098BB;
 			packageReferences = (
 				557DDE8D2B6723B200BC61F8 /* XCRemoteSwiftPackageReference "Starscream" */,
+				5553689C2B678A2E0074DAA1 /* XCRemoteSwiftPackageReference "Swift-JWT" */,
 			);
 			productRefGroup = 26B76AB525DB68B2007098BB /* Products */;
 			projectDirPath = "";
@@ -303,6 +318,7 @@
 				555368892B67587E0074DAA1 /* Util.swift in Sources */,
 				557DDE912B6723FF00BC61F8 /* WebSocketManager.swift in Sources */,
 				26B76AB825DB68B2007098BB /* AppDelegate.swift in Sources */,
+				5553689B2B676D800074DAA1 /* authParam.swift in Sources */,
 				26B76ABA25DB68B2007098BB /* SceneDelegate.swift in Sources */,
 				26B76AC225DB68B2007098BB /* Tradewithupbit.xcdatamodeld in Sources */,
 			);
@@ -639,6 +655,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5553689C2B678A2E0074DAA1 /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-JWT";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 		557DDE8D2B6723B200BC61F8 /* XCRemoteSwiftPackageReference "Starscream" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream.git";
@@ -650,6 +674,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5553689D2B678A2E0074DAA1 /* SwiftJWT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5553689C2B678A2E0074DAA1 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			productName = SwiftJWT;
+		};
 		557DDE8E2B6723B200BC61F8 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 557DDE8D2B6723B200BC61F8 /* XCRemoteSwiftPackageReference "Starscream" */;
