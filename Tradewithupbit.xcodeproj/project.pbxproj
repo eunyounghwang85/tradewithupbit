@@ -18,6 +18,7 @@
 		26B76ADD25DB68B5007098BB /* TradewithupbitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B76ADC25DB68B5007098BB /* TradewithupbitUITests.swift */; };
 		555368892B67587E0074DAA1 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555368882B67587E0074DAA1 /* Util.swift */; };
 		5553688B2B6758B70074DAA1 /* appString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5553688A2B6758B70074DAA1 /* appString.swift */; };
+		555368982B675E940074DAA1 /* privacyToken.plist in Resources */ = {isa = PBXBuildFile; fileRef = 555368972B675E940074DAA1 /* privacyToken.plist */; };
 		557DDE8F2B6723B200BC61F8 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 557DDE8E2B6723B200BC61F8 /* Starscream */; };
 		557DDE912B6723FF00BC61F8 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		26B76ADE25DB68B5007098BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		555368882B67587E0074DAA1 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		5553688A2B6758B70074DAA1 /* appString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = appString.swift; sourceTree = "<group>"; };
+		555368972B675E940074DAA1 /* privacyToken.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = privacyToken.plist; sourceTree = "<group>"; };
 		557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				26B76AB725DB68B2007098BB /* AppDelegate.swift */,
+				555368962B675E940074DAA1 /* private */,
 				26B76AB925DB68B2007098BB /* SceneDelegate.swift */,
 				26B76ABB25DB68B2007098BB /* ViewController.swift */,
 				557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */,
@@ -149,6 +152,14 @@
 			);
 			path = util;
 			sourceTree = "<group>";
+		};
+		555368962B675E940074DAA1 /* private */ = {
+			isa = PBXGroup;
+			children = (
+				555368972B675E940074DAA1 /* privacyToken.plist */,
+			);
+			path = private;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -262,6 +273,7 @@
 				26B76AC725DB68B5007098BB /* LaunchScreen.storyboard in Resources */,
 				26B76AC425DB68B5007098BB /* Assets.xcassets in Resources */,
 				26B76ABF25DB68B2007098BB /* Main.storyboard in Resources */,
+				555368982B675E940074DAA1 /* privacyToken.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
