@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,8 @@
 		26B76AC725DB68B5007098BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26B76AC525DB68B5007098BB /* LaunchScreen.storyboard */; };
 		26B76AD225DB68B5007098BB /* TradewithupbitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B76AD125DB68B5007098BB /* TradewithupbitTests.swift */; };
 		26B76ADD25DB68B5007098BB /* TradewithupbitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B76ADC25DB68B5007098BB /* TradewithupbitUITests.swift */; };
+		557DDE8F2B6723B200BC61F8 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 557DDE8E2B6723B200BC61F8 /* Starscream */; };
+		557DDE912B6723FF00BC61F8 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,7 @@
 		26B76AD825DB68B5007098BB /* TradewithupbitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradewithupbitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		26B76ADC25DB68B5007098BB /* TradewithupbitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradewithupbitUITests.swift; sourceTree = "<group>"; };
 		26B76ADE25DB68B5007098BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557DDE8F2B6723B200BC61F8 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +108,7 @@
 				26B76AB725DB68B2007098BB /* AppDelegate.swift */,
 				26B76AB925DB68B2007098BB /* SceneDelegate.swift */,
 				26B76ABB25DB68B2007098BB /* ViewController.swift */,
+				557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */,
 				26B76ABD25DB68B2007098BB /* Main.storyboard */,
 				26B76AC325DB68B5007098BB /* Assets.xcassets */,
 				26B76AC525DB68B5007098BB /* LaunchScreen.storyboard */,
@@ -147,6 +152,9 @@
 			dependencies = (
 			);
 			name = Tradewithupbit;
+			packageProductDependencies = (
+				557DDE8E2B6723B200BC61F8 /* Starscream */,
+			);
 			productName = Tradewithupbit;
 			productReference = 26B76AB425DB68B2007098BB /* Tradewithupbit.app */;
 			productType = "com.apple.product-type.application";
@@ -218,6 +226,9 @@
 				Base,
 			);
 			mainGroup = 26B76AAB25DB68B2007098BB;
+			packageReferences = (
+				557DDE8D2B6723B200BC61F8 /* XCRemoteSwiftPackageReference "Starscream" */,
+			);
 			productRefGroup = 26B76AB525DB68B2007098BB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -262,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26B76ABC25DB68B2007098BB /* ViewController.swift in Sources */,
+				557DDE912B6723FF00BC61F8 /* WebSocketManager.swift in Sources */,
 				26B76AB825DB68B2007098BB /* AppDelegate.swift in Sources */,
 				26B76ABA25DB68B2007098BB /* SceneDelegate.swift in Sources */,
 				26B76AC225DB68B2007098BB /* Tradewithupbit.xcdatamodeld in Sources */,
@@ -370,7 +382,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -425,7 +437,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -597,6 +609,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		557DDE8D2B6723B200BC61F8 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		557DDE8E2B6723B200BC61F8 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 557DDE8D2B6723B200BC61F8 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		26B76AC025DB68B2007098BB /* Tradewithupbit.xcdatamodeld */ = {
