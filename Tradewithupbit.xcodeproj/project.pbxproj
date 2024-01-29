@@ -121,6 +121,7 @@
 				26B76AB925DB68B2007098BB /* SceneDelegate.swift */,
 				26B76ABB25DB68B2007098BB /* ViewController.swift */,
 				557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */,
+				555368A12B6794AA0074DAA1 /* upbitApi */,
 				555368962B675E940074DAA1 /* private */,
 				555368872B67586C0074DAA1 /* util */,
 				26B76ABD25DB68B2007098BB /* Main.storyboard */,
@@ -164,10 +165,17 @@
 			children = (
 				555368972B675E940074DAA1 /* privacyToken.plist */,
 				5553689F2B67908C0074DAA1 /* privacyString.swift */,
-				5553689A2B676D800074DAA1 /* authParam.swift */,
 			);
 			path = private;
 			sourceTree = SOURCE_ROOT;
+		};
+		555368A12B6794AA0074DAA1 /* upbitApi */ = {
+			isa = PBXGroup;
+			children = (
+				5553689A2B676D800074DAA1 /* authParam.swift */,
+			);
+			path = upbitApi;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
