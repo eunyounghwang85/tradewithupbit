@@ -22,6 +22,8 @@
 		5553689B2B676D800074DAA1 /* authParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5553689A2B676D800074DAA1 /* authParam.swift */; };
 		5553689E2B678A2E0074DAA1 /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = 5553689D2B678A2E0074DAA1 /* SwiftJWT */; };
 		555368A02B67908C0074DAA1 /* privacyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5553689F2B67908C0074DAA1 /* privacyString.swift */; };
+		555368A32B67972C0074DAA1 /* marketParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555368A22B67972C0074DAA1 /* marketParam.swift */; };
+		555368A52B68799C0074DAA1 /* ex+Params.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555368A42B68799C0074DAA1 /* ex+Params.swift */; };
 		557DDE8F2B6723B200BC61F8 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 557DDE8E2B6723B200BC61F8 /* Starscream */; };
 		557DDE912B6723FF00BC61F8 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */; };
 /* End PBXBuildFile section */
@@ -64,6 +66,8 @@
 		555368972B675E940074DAA1 /* privacyToken.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = privacyToken.plist; sourceTree = "<group>"; };
 		5553689A2B676D800074DAA1 /* authParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = authParam.swift; sourceTree = "<group>"; };
 		5553689F2B67908C0074DAA1 /* privacyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyString.swift; sourceTree = "<group>"; };
+		555368A22B67972C0074DAA1 /* marketParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = marketParam.swift; sourceTree = "<group>"; };
+		555368A42B68799C0074DAA1 /* ex+Params.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ex+Params.swift"; sourceTree = "<group>"; };
 		557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,6 +169,7 @@
 			children = (
 				555368972B675E940074DAA1 /* privacyToken.plist */,
 				5553689F2B67908C0074DAA1 /* privacyString.swift */,
+				555368A42B68799C0074DAA1 /* ex+Params.swift */,
 			);
 			path = private;
 			sourceTree = SOURCE_ROOT;
@@ -173,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				5553689A2B676D800074DAA1 /* authParam.swift */,
+				555368A22B67972C0074DAA1 /* marketParam.swift */,
 			);
 			path = upbitApi;
 			sourceTree = "<group>";
@@ -324,7 +330,9 @@
 				555368A02B67908C0074DAA1 /* privacyString.swift in Sources */,
 				5553689B2B676D800074DAA1 /* authParam.swift in Sources */,
 				26B76ABA25DB68B2007098BB /* SceneDelegate.swift in Sources */,
+				555368A52B68799C0074DAA1 /* ex+Params.swift in Sources */,
 				26B76AC225DB68B2007098BB /* Tradewithupbit.xcdatamodeld in Sources */,
+				555368A32B67972C0074DAA1 /* marketParam.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -142,16 +142,29 @@ extension WebSocketManager  :  WebSocketDelegate {
         case .connected(let headers):
             isConnected = true
             print("websocket is connected: \(headers)")
-            self.socket?.write(string: "[{\"ticket\":\"hey\"},{\"type\":\"ticker\",\"codes\":[\"KRW-BTC\"]}]", completion:nil)
+            
+            var obje = marketParam(type: .ticker)
+            if isauthorizationToken {
+                // 전체시세 빈배열
+                obje.codes = ["KRW-BTC"]
+            }else{
+                // codes 필수로 1개이상
+                obje.codes = ["KRW-BTC"]
+                
+            }
+           
+            let stt = obje.SendForm()
+            Log("<<didReceive>> " + stt)
+            self.socket?.write(string:stt, completion:nil)
 
         case .disconnected(let reason, let code):
             isConnected = false
-            print("websocket is disconnected: \(reason) with code: \(code)")
+            Log("websocket is disconnected: \(reason) with code: \(code)")
         case .text(let string):
-            print("Received text: \(string)")
+            Log("Received text: \(string)")
             
         case .binary(let data):
-            print("Received data: \(data.count)")
+            Log("Received data: \(data.count)")
             let str = String(decoding: data, as: UTF8.self)
             Log(str)
         case .ping(_):

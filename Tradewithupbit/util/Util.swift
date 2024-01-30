@@ -49,8 +49,32 @@ public func synchronized<T>(_ lock: AnyObject, closure:() -> T) -> T {
 
     return closure()
 }
-
+extension Array where Element == Encodable {
+    func toString() -> String {
+        
+        var result = ""
+        var values = self
+        while !values.isEmpty {
+            let e = values.removeFirst()
+            result += result.isEmpty ? "[\(e.toString())" : ",\(e.toString())"
+            if values.isEmpty {
+                result += "]"
+                break
+            }
+        }
+        
+        return result
+    }
+}
 extension Encodable {
+    func toString() -> String {
+        guard let data = try? JSONEncoder().encode(self) else {
+            return ""
+        }
+        
+        let result = String(decoding: data, as: UTF8.self)
+        return result
+    }
     func toDictionary() -> [String: Any] {
         guard let data = try? JSONEncoder().encode(self),
               let jsonData = try? JSONSerialization.jsonObject(with: data),
