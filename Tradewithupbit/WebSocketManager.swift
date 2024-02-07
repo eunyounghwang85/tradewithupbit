@@ -22,9 +22,10 @@ class WebSocketManager : NSObject {
     // add objever 여부 확인
     lazy var appobjever : Bool = false
     lazy var appLoadToWait: Bool = false
-    /// connet 관리
-    lazy var isConnected = false
     
+    lazy var state : WebSocketSessionState = .closed
+    lazy var reconnectTimer:ReconnectTimer? = nil
+    lazy var foregroundReconnection : ForegroundReconnection? = nil
     lazy var webSocketQueue : OperationQueue  = {
         let  _webSocketQueue = OperationQueue()
         _webSocketQueue.name = MAINSIGN.appending(".heyWebSocket.OperationQueue")
@@ -51,13 +52,7 @@ class WebSocketManager : NSObject {
   
     override init() {
         super.init()
-       
-        // addobserver
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name:  UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification(_:)), name:  UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(willTerminateNotification(_:)), name:  UIApplication.willTerminateNotification, object: nil)
-        
-      
+    
     }
     
     deinit {
@@ -65,31 +60,75 @@ class WebSocketManager : NSObject {
         self.cancelAlloperation()
         NotificationCenter.default.removeObserver(self)
     }
-    func commitIntial(){
-        guard let socket = self.socket else {
-            var request = URLRequest(url: URL(string: "wss://api.upbit.com/websocket/v1")!)
-            request.timeoutInterval = 60
-            
-            if isauthorizationToken {
-                request.allHTTPHeaderFields = AuthorizationHeader()
-                //let compression = WSCompression()
-                self.socket =  WebSocket(request: request, useCustomEngine: true)
-            }else{
-                self.socket =  WebSocket(request: request)
+    func commitIntial(_ start:Bool = false){
+        
+        defer {
+            if start {
+                openSocket()
             }
+        }
+        
+        guard  socket == nil  else {
             return
         }
         
-        guard !self.isConnected else {
+        self.updateState(.starting)
+        var request = URLRequest(url: URL(string: "wss://api.upbit.com/websocket/v1")!)
+        request.timeoutInterval = 60
+        
+        if isauthorizationToken {
+            request.allHTTPHeaderFields = AuthorizationHeader()
+            //let compression = WSCompression()
+            self.socket =  WebSocket(request: request, useCustomEngine: true)
+        }else{
+            self.socket =  WebSocket(request: request)
+        }
+        self.reconnectTimer = ReconnectTimer(RECONNECT_TIMER, RECONNECT_TIMER_MAX_DEFAULT){
+            [weak self] in
+            guard let self =  self else{
+                return
+            }
+            self.reconnect()
+        }
+        self.foregroundReconnection = ForegroundReconnection(sessionManager: self)
+    
+    }
+    func reconnect(){
+        self.updateState(.starting)
+        self.connectToInternal()
+    }
+    func triggerDelayedReconnect(){
+        self.reconnectTimer?.schedule()
+    }
+    func connectToInternal(){
+        guard let socket = self.socket, self.state == .starting else {
             return
         }
-        
+        self.updateState(.connecting)
         socket.connect()
+    }
+
+    func openSocket(){
+        guard socket != nil  else {
+            self.commitIntial(true)
+            return
+        }
+        
+        guard self.state != .connected else {
+            return
+        }
+        self.reconnectTimer?.resetRetryInterval()
+        self.reconnect()
     }
     func closeSocket(_ isforce:Bool=false) {
         guard let socket = self.socket else {
             return
         }
+        
+        defer {
+            self.reconnectTimer?.stop()
+        }
+        self.updateState(.closing)
         guard isforce else {
             
             socket.disconnect()
@@ -98,6 +137,7 @@ class WebSocketManager : NSObject {
         }
         socket.forceDisconnect()
         self.socket = nil
+       
     }
     func cancelAlloperation() {
         
@@ -113,53 +153,51 @@ class WebSocketManager : NSObject {
       
     }
     
-    // MARK: applicationDidEnterBackground
-    @objc func applicationDidEnterBackground(_ notification: NSNotification?){
-        Log("\(notification?.name.rawValue ?? "applicationDidEnterBackground")")
-        self.webSocketQueue.isSuspended = true
-        self.closeSocket()
-    }
-    
-    @objc func applicationDidBecomeActiveNotification(_ notification: NSNotification?){
-        Log("\(notification?.name.rawValue ?? "applicationDidBecomeActiveNotification")")
-        self.webSocketQueue.isSuspended = false
-        self.commitIntial()
-    }
-   
-    @objc func willTerminateNotification(_ notification: NSNotification?){
-        Log("\(notification?.name.rawValue ?? "willTerminateNotification")")
-        self.webSocketQueue.isSuspended = false
-        self.closeSocket(true)
-        self.cancelAlloperation()
-        NotificationCenter.default.removeObserver(self)
+    func updateState(_ newState:WebSocketSessionState) {
+        if case WebSocketSessionState.error(let e) = newState {
+            Log("\(e?.localizedDescription ?? "error empty")")
+        }
+        state = newState
     }
 }
-
+extension WebSocketManager   {
+    var requiresTearDown : Bool {
+        return self.state != .closed && self.state != .starting
+    }
+}
 extension WebSocketManager  :  WebSocketDelegate {
-  
+    func sendMesseage(){
+        guard self.state == .connected, let socket = self.socket else {
+            return
+        }
+        var obje = marketParam(type: .ticker)
+        if isauthorizationToken {
+            // 전체시세 빈배열
+            obje.codes = ["KRW-BTC"]
+        }else{
+            // codes 필수로 1개이상
+            obje.codes = ["KRW-BTC"]
+            
+        }
+       
+        let stt = sendFormesseage(market: [obje])
+        Log("<<didReceive>> " + stt)
+        socket.write(string:stt, completion:nil)
+    }
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
         case .connected(let headers):
-            isConnected = true
-            print("websocket is connected: \(headers)")
-            
-            var obje = marketParam(type: .ticker)
-            if isauthorizationToken {
-                // 전체시세 빈배열
-                obje.codes = ["KRW-BTC"]
-            }else{
-                // codes 필수로 1개이상
-                obje.codes = ["KRW-BTC"]
-                
-            }
-           
-            let stt = obje.SendForm()
-            Log("<<didReceive>> " + stt)
-            self.socket?.write(string:stt, completion:nil)
-
+            self.updateState(.connected)
+            self.reconnectTimer?.resetRetryInterval()
+            Log("websocket is connected: \(headers)")
         case .disconnected(let reason, let code):
-            isConnected = false
+            
             Log("websocket is disconnected: \(reason) with code: \(code)")
+            if self.state != .closing {
+                // 앱에서 disconnect 한게 아니면~
+                self.triggerDelayedReconnect()
+            }
+            self.updateState(.closed)
         case .text(let string):
             Log("Received text: \(string)")
             
@@ -176,10 +214,10 @@ extension WebSocketManager  :  WebSocketDelegate {
         case .reconnectSuggested(_):
             break
         case .cancelled:
-            isConnected = false
+             self.updateState(.closed)
         case .error(let error):
-            isConnected = false
             Log(String(describing: error))
+            self.updateState(.error(error))
             //handleError(error)
         case .peerClosed:
                    break
