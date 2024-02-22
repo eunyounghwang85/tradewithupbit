@@ -191,7 +191,7 @@ extension WebSocketManager  :  WebSocketDelegate {
     func isExpiredAccesstoken (_ error: Starscream.HTTPUpgradeError) -> Bool {
         
         switch error {
-        case .notAnUpgrade(let ercode, let erdictionary):
+        case .notAnUpgrade(let ercode, _):
             // expiredAccesstoken
             return ercode == 401
         case .invalidData:
