@@ -25,7 +25,7 @@ class WebSocketManager : NSObject {
     
     lazy var state : WebSocketSessionState = .closed
     lazy var reconnectTimer:ReconnectTimer? = nil
-    lazy var foregroundReconnection : ForegroundReconnection? = nil
+    var foregroundReconnection : ForegroundReconnection!
     lazy var webSocketQueue : OperationQueue  = {
         let  _webSocketQueue = OperationQueue()
         _webSocketQueue.name = MAINSIGN.appending(".heyWebSocket.OperationQueue")
@@ -52,7 +52,7 @@ class WebSocketManager : NSObject {
   
     override init() {
         super.init()
-    
+        foregroundReconnection = ForegroundReconnection(sessionManager: self)
     }
     
     deinit {
@@ -60,7 +60,7 @@ class WebSocketManager : NSObject {
         self.cancelAlloperation()
         NotificationCenter.default.removeObserver(self)
     }
-    func commitIntial(_ start:Bool = false){
+    func commitInitial(_ start:Bool = false){
         
         defer {
             if start {
@@ -81,7 +81,7 @@ class WebSocketManager : NSObject {
             //let compression = WSCompression()
             self.socket =  WebSocket(request: request, useCustomEngine: true)
         }else{
-            self.socket =  WebSocket(request: request)
+            self.socket =  WebSocket(request: request, useCustomEngine: false)
         }
         self.reconnectTimer = ReconnectTimer(RECONNECT_TIMER, RECONNECT_TIMER_MAX_DEFAULT){
             [weak self] in
@@ -90,8 +90,6 @@ class WebSocketManager : NSObject {
             }
             self.reconnect()
         }
-        self.foregroundReconnection = ForegroundReconnection(sessionManager: self)
-    
     }
     func reconnect(){
         self.updateState(.starting)
@@ -101,6 +99,11 @@ class WebSocketManager : NSObject {
         self.reconnectTimer?.schedule()
     }
     func connectToInternal(){
+        
+        guard self.foregroundReconnection.appState == .applicationDidBecome else {
+            return
+        }
+        
         guard let socket = self.socket, self.state == .starting else {
             return
         }
@@ -110,7 +113,7 @@ class WebSocketManager : NSObject {
 
     func openSocket(){
         guard socket != nil  else {
-            self.commitIntial(true)
+            self.commitInitial(true)
             return
         }
         
@@ -154,10 +157,28 @@ class WebSocketManager : NSObject {
     }
     
     func updateState(_ newState:WebSocketSessionState) {
-        if case WebSocketSessionState.error(let e) = newState {
-            Log("\(e?.localizedDescription ?? "error empty")")
-        }
         state = newState
+        guard case WebSocketSessionState.error(let e) = newState else {
+            return
+        }
+        if let e = e {
+            Log(String(describing: e))
+        }else{
+            Log("error empty")
+        }
+        
+        guard let t = e as? Starscream.HTTPUpgradeError else {
+            return  self.triggerDelayedReconnect()
+        }
+        
+        closeSocket(true)
+        guard isExpiredAccesstoken(t),
+              foregroundReconnection.appState == .applicationDidBecome else {
+            return
+        }
+        // accesstoken 재발급
+        self.commitInitial(true)
+       
     }
 }
 extension WebSocketManager   {
@@ -166,6 +187,17 @@ extension WebSocketManager   {
     }
 }
 extension WebSocketManager  :  WebSocketDelegate {
+    
+    func isExpiredAccesstoken (_ error: Starscream.HTTPUpgradeError) -> Bool {
+        
+        switch error {
+        case .notAnUpgrade(let ercode, let erdictionary):
+            // expiredAccesstoken
+            return ercode == 401
+        case .invalidData:
+            return false
+        }
+    }
     func sendMesseage(){
         guard self.state == .connected, let socket = self.socket else {
             return
@@ -216,11 +248,11 @@ extension WebSocketManager  :  WebSocketDelegate {
         case .cancelled:
              self.updateState(.closed)
         case .error(let error):
-            Log(String(describing: error))
+           
             self.updateState(.error(error))
-            //handleError(error)
+
         case .peerClosed:
-                   break
+            break
         }
     }
     

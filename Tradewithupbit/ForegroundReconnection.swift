@@ -10,6 +10,12 @@ import  UIKit
 import BackgroundTasks
 
 
+enum AppState {
+    case didFinishLaunchingWithOptions
+    case applicationDidBecome
+    case willResignActive
+    case applicationDidEnterBackground
+}
 class ForegroundReconnection : NSObject {
     
     weak var sessionManager:WebSocketManager!
@@ -22,7 +28,8 @@ class ForegroundReconnection : NSObject {
             task = .invalid
         }
     }
-
+    lazy var appState:AppState = .didFinishLaunchingWithOptions
+    
     init(sessionManager: WebSocketManager) {
         self.sessionManager = sessionManager
         super.init()
@@ -40,6 +47,7 @@ class ForegroundReconnection : NSObject {
     // MARK: applicationDidEnterBackground
     @objc func applicationDidEnterBackground(_ notification: NSNotification?){
         Log("\(notification?.name.rawValue ?? "applicationDidEnterBackground")")
+        appState = .applicationDidEnterBackground
         guard self.sessionManager.requiresTearDown else {
             return
         }
@@ -55,11 +63,14 @@ class ForegroundReconnection : NSObject {
 
     @objc func applicationDidBecome(_ notification: NSNotification?){
         Log("\(notification?.name.rawValue ?? "applicationDidBecome")")
+        appState = .applicationDidBecome
+        endBackgroundTask()
         self.sessionManager.openSocket()
     }
 
     @objc func willResignActive(_ notification: NSNotification?){
         Log("\(notification?.name.rawValue ?? "willResignActive")")
+        appState = .willResignActive
         self.sessionManager.closeSocket()
     }
     
