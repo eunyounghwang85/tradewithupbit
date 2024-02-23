@@ -64,7 +64,8 @@ struct editView: View {
             }).background(Color.pink.opacity(0.6))
                 .foregroundColor(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
-            
+                .background(in:.capsule)
+                //.background(ignoresSafeAreaEdges: .all)
         }
       
     }

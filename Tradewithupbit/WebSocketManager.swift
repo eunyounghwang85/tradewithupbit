@@ -26,12 +26,14 @@ class WebSocketManager : NSObject {
     lazy var state : WebSocketSessionState = .closed
     lazy var reconnectTimer:ReconnectTimer? = nil
     var foregroundReconnection : ForegroundReconnection!
+    
     lazy var webSocketQueue : OperationQueue  = {
         let  _webSocketQueue = OperationQueue()
         _webSocketQueue.name = MAINSIGN.appending(".heyWebSocket.OperationQueue")
         _webSocketQueue.maxConcurrentOperationCount = 4
         return _webSocketQueue
     }()
+    
     lazy var socket : WebSocket? = nil {
             
         willSet{

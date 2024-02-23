@@ -177,8 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				555368972B675E940074DAA1 /* privacyToken.plist */,
-				5553689F2B67908C0074DAA1 /* privacyString.swift */,
-				555368A42B68799C0074DAA1 /* ex+Params.swift */,
 			);
 			path = private;
 			sourceTree = SOURCE_ROOT;
@@ -188,6 +186,8 @@
 			children = (
 				5553689A2B676D800074DAA1 /* authParam.swift */,
 				555368A22B67972C0074DAA1 /* marketParam.swift */,
+				5553689F2B67908C0074DAA1 /* privacyString.swift */,
+				555368A42B68799C0074DAA1 /* ex+Params.swift */,
 			);
 			path = upbitApi;
 			sourceTree = "<group>";
@@ -523,6 +523,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J9G7LUHM5U;
 				INFOPLIST_FILE = Tradewithupbit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -542,6 +543,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J9G7LUHM5U;
 				INFOPLIST_FILE = Tradewithupbit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
