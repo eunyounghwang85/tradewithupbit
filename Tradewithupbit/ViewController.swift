@@ -33,45 +33,5 @@ extension  ViewController {
         return UIHostingController(rootView: editView())
     }
 }
-struct editView: View {
-    
-    @State var isFollowed = false
-    
-    var body: some View {
-        ZStack{
-            Button(action: {
-                isFollowed = !isFollowed
-                actionItem()
-            }, label:{
-                Text("시세정보")
-                    .font(.largeTitle)
-                    .padding(.all, 10)
-                /* .background(
-                      
-                                       ZStack {
-                                            RoundedRectangle(
-                                                cornerRadius: 20,
-                                                style: .continuous
-                                            )
-                                            .fill(isFollowed ? .clear : .pink.opacity(0.6))
-                                            RoundedRectangle(
-                                                cornerRadius: 20,
-                                                style: .continuous
-                                            )
-                                            .stroke(.white, lineWidth: 2)
-                                        }
-                                    )*/
-            }).background(Color.pink.opacity(0.6))
-                .foregroundColor(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .background(in:.capsule)
-                //.background(ignoresSafeAreaEdges: .all)
-        }
-      
-    }
-    
-    func actionItem(){
-        WebSocketManager.shared.sendMesseage()
-    }
-}
+
 
