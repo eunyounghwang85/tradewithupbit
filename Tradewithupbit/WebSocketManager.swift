@@ -10,9 +10,9 @@ import UIKit
 import Starscream
 import Combine
 
-
-
-
+enum initalError: Error {
+    case none
+}
 class WebSocketManager : NSObject {
     
     static let shared: WebSocketManager = {
@@ -31,7 +31,7 @@ class WebSocketManager : NSObject {
     var foregroundReconnection : ForegroundReconnection!
     
     lazy var state : WebSocketSessionState = .closed
-    lazy var error:Error? = nil
+    lazy var error: CurrentValueSubject<Error, Never> = CurrentValueSubject<Error, Never>(initalError.none)
     
     lazy var webSocketQueue : OperationQueue  = {
         let  _webSocketQueue = OperationQueue()
@@ -39,6 +39,10 @@ class WebSocketManager : NSObject {
         _webSocketQueue.maxConcurrentOperationCount = 4
         return _webSocketQueue
     }()
+    
+    
+    var cancelBag: Set<AnyCancellable> = []
+    
     
     lazy var socket : WebSocket? = nil {
             
@@ -63,6 +67,51 @@ class WebSocketManager : NSObject {
     override init() {
         super.init()
         foregroundReconnection = ForegroundReconnection(sessionManager: self)
+        self.error.sink {
+             c in
+           
+            Log("complite: \(c)")
+        } receiveValue: { [weak self] e in
+            
+            guard let self  = self else {return}
+            guard (e as? initalError) == nil else {
+                return
+            }
+            Log("websocket is error:\n \(String(describing: e) )")
+            guard  let authError = e as? HTTPUpgradeError, isExpiredAccesstoken(authError)  else {
+               
+                guard !self.state.tryClose  else {
+                    return
+                }
+                self.updateState(.closed)
+                guard let proto = e as? WSError , proto.type == .protocolError else {
+                    self.triggerDelayedReconnect()
+                    return
+                }
+                Log("아무것도 하지 않는다")
+               
+                return
+            }
+            /*guard (e as? HTTPUpgradeError) != nil else {
+                return
+            }*/
+            guard self.state != .starting && !(self.reconnectTimer?.timer?.isValid ?? false) else {
+                
+                Log("retry호출 기다려준다")
+                
+                return
+            }
+            let currentRetryInterval = reconnectTimer?.currentRetryInterval ?? RECONNECT_TIMER
+            self.reconnectTimer?.stop()
+            self.updateState(.closed)
+            self.socket = nil
+            // accesstoken 재발급
+            self.commitInitial()
+            self.reconnectTimer?.currentRetryInterval = currentRetryInterval
+            self.triggerDelayedReconnect()
+            
+        }.store(in: &cancelBag)
+
     }
     
     deinit {
@@ -139,7 +188,7 @@ class WebSocketManager : NSObject {
         guard self.foregroundReconnection.appState == .applicationDidBecome, !self.state.tryConnected else {
             return
         }
-        self.error = nil
+        self.error.send(initalError.none)
         self.reconnectTimer?.stop()
         self.reconnectTimer?.resetRetryInterval()
         self.reconnect()
@@ -202,7 +251,7 @@ class WebSocketManager : NSObject {
        
     
         // error 발생할경우 소켓클로즈 처리
-        self.error = e
+        
         
        /* defer {
             if let proto = e as? WSError , proto.type == .protocolError {
@@ -287,7 +336,7 @@ extension WebSocketManager  :  WebSocketDelegate {
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
         case .connected(let headers):
-            self.error = nil
+            self.error.send(initalError.none)
             self.updateState(.connected)
             self.reconnectTimer?.resetRetryInterval()
             Log("websocket is connected: \(headers)")
@@ -321,7 +370,7 @@ extension WebSocketManager  :  WebSocketDelegate {
         case .cancelled:
             Log("websocket is cancelled")
             
-            guard self.error == nil, !self.state.tryClose else {
+            guard (self.error.value as? initalError) != nil, !self.state.tryClose else {
                 return
             }
             self.updateState(.closed)
@@ -331,7 +380,7 @@ extension WebSocketManager  :  WebSocketDelegate {
         case .peerClosed:
             Log("websocket is peerClosed")
             
-            guard self.error == nil, !self.state.tryClose else {
+            guard (self.error.value as? initalError) != nil, !self.state.tryClose else {
                 return
             }
             self.updateState(.closed)
@@ -339,15 +388,28 @@ extension WebSocketManager  :  WebSocketDelegate {
             
             break
         case .error(let error):
-            let logstring = {
-                if let e = error {
-                   return String(describing: e)
+            if let e = error {
+               
+                self.error.send(e)
+               /* if let prto = e as? WSError {
+                    self.error.send(prto)
+                }else if let proto = e as? HTTPUpgradeError {
+                    self.error.send(proto)
                 }else{
-                   return "error empty"
+                    self.error.send(e)
+                }*/
+                /*guard let proto = e as? WSError , proto.type == .protocolError else {
+                    self.error.send(e)
+                    return
                 }
-            }()
-            Log("websocket is error:\n \(logstring )")
-            self.updateState(.error(error))
+                self.error.send(e)
+                self.error.send(completion: .failure(proto.type))
+              */
+            }else{
+                Log("websocket is error:- error empty")
+            
+            }
+           // self.updateState(.error(error))
             break
         }
     }

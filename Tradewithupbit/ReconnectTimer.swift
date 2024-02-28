@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public let RECONNECT_TIMER:TimeInterval =  1.0
-public let RECONNECT_TIMER_MAX_DEFAULT :TimeInterval = 5.0
+public let RECONNECT_TIMER_MAX_DEFAULT :TimeInterval = 60.0
 
 class ReconnectTimer : NSObject {
     
@@ -19,7 +19,7 @@ class ReconnectTimer : NSObject {
     lazy var reconnetBlock:(()->Void) = {}
     lazy var timer:Timer? = nil {
         willSet{
-            guard let timer = timer else {
+            guard let timer = timer, timer.isValid else {
                 return
             }
             Log("timer invalidate")
@@ -45,7 +45,7 @@ class ReconnectTimer : NSObject {
     
     deinit {
         self.reconnetBlock = {}
-        self.stop()
+        self.timer = nil
     }
     
     @objc func resetRetryInterval(){
@@ -60,18 +60,19 @@ class ReconnectTimer : NSObject {
     }
     
     @objc func stop(){
+        Log("stop timer")
         self.timer = nil
     }
     
     @objc func reconnect(){
 
-        self.stop()
+        self.timer = nil
         
         if self.currentRetryInterval < self.maxRetryInterval {
             self.currentRetryInterval *= 2
         }
         
-        Log("sreconnect: \(currentRetryInterval)")
+        Log("sreconnect: \(String(describing:currentRetryInterval))")
         
         self.reconnetBlock()
     }
