@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 import Starscream
+import Combine
+
+
+
 
 class WebSocketManager : NSObject {
     
@@ -23,9 +27,11 @@ class WebSocketManager : NSObject {
     lazy var appobjever : Bool = false
     lazy var appLoadToWait: Bool = false
     
-    lazy var state : WebSocketSessionState = .closed
     lazy var reconnectTimer:ReconnectTimer? = nil
     var foregroundReconnection : ForegroundReconnection!
+    
+    lazy var state : WebSocketSessionState = .closed
+    lazy var error:Error? = nil
     
     lazy var webSocketQueue : OperationQueue  = {
         let  _webSocketQueue = OperationQueue()
@@ -37,11 +43,13 @@ class WebSocketManager : NSObject {
     lazy var socket : WebSocket? = nil {
             
         willSet{
-            guard let old = socket else {
+            guard let old = socket, !self.state.tryClose else {
                 return
             }
-            old.disconnect()
+            old.delegate = nil
+            old.forceDisconnect()
         }
+        
         didSet{
             guard let s = socket else {
                 return
@@ -85,30 +93,39 @@ class WebSocketManager : NSObject {
         }else{
             self.socket =  WebSocket(request: request, useCustomEngine: false)
         }
+    
         self.reconnectTimer = ReconnectTimer(RECONNECT_TIMER, RECONNECT_TIMER_MAX_DEFAULT){
             [weak self] in
             guard let self =  self else{
                 return
             }
+            Log("reconnect call!!")
+            guard self.foregroundReconnection.appState == .applicationDidBecome, !self.state.tryConnected else {
+                return
+            }
+            Log("reconnect start!!")
             self.reconnect()
         }
     }
     func reconnect(){
+    
         self.updateState(.starting)
         self.connectToInternal()
     }
     func triggerDelayedReconnect(){
-        self.reconnectTimer?.schedule()
-    }
-    func connectToInternal(){
         
         guard self.foregroundReconnection.appState == .applicationDidBecome else {
             return
         }
+        self.reconnectTimer?.schedule()
+    }
+    func connectToInternal(){
         
-        guard let socket = self.socket, self.state == .starting else {
+        guard self.foregroundReconnection.appState == .applicationDidBecome,
+              let socket = self.socket, self.state == .starting else {
             return
         }
+      
         self.updateState(.connecting)
         socket.connect()
     }
@@ -119,30 +136,44 @@ class WebSocketManager : NSObject {
             return
         }
         
-        guard self.state != .connected else {
+        guard self.foregroundReconnection.appState == .applicationDidBecome, !self.state.tryConnected else {
             return
         }
+        self.error = nil
+        self.reconnectTimer?.stop()
         self.reconnectTimer?.resetRetryInterval()
         self.reconnect()
     }
     func closeSocket(_ isforce:Bool=false) {
-        guard let socket = self.socket else {
+        
+        guard let socket = self.socket  else {
             return
         }
         
-        defer {
-            self.reconnectTimer?.stop()
+        self.reconnectTimer?.stop()
+        defer{
+            if isforce {
+                self.socket = nil
+            }
         }
-        self.updateState(.closing)
-        guard isforce else {
-            
-            socket.disconnect()
-            
+        let current = self.state
+        guard !current.tryClose else {
             return
         }
-        socket.forceDisconnect()
-        self.socket = nil
-       
+        
+        Log("websocket is Closing \(String(describing: current))")
+        self.updateState(.closing)
+        guard current == .connected else {
+            // 완벽히 연결된 경우만 끊어줌
+            return
+        }
+        if isforce {
+            socket.forceDisconnect()
+        }else {
+            socket.disconnect()
+        }
+
+      
     }
     func cancelAlloperation() {
         
@@ -159,34 +190,67 @@ class WebSocketManager : NSObject {
     }
     
     func updateState(_ newState:WebSocketSessionState) {
-        state = newState
-        guard case WebSocketSessionState.error(let e) = newState else {
-            return
-        }
-        if let e = e {
-            Log(String(describing: e))
-        }else{
-            Log("error empty")
-        }
-        
-        guard let t = e as? Starscream.HTTPUpgradeError else {
-            return  self.triggerDelayedReconnect()
-        }
-        
-        closeSocket(true)
-        guard isExpiredAccesstoken(t),
-              foregroundReconnection.appState == .applicationDidBecome else {
-            return
-        }
-        // accesstoken 재발급
-        self.commitInitial(true)
        
+        guard case WebSocketSessionState.error(let e) = newState else {
+            Log("updateState:\(newState)")
+            // error는 반영하지 않음
+            self.state = newState
+            return
+        }
+        
+        
+       
+    
+        // error 발생할경우 소켓클로즈 처리
+        self.error = e
+        
+       /* defer {
+            if let proto = e as? WSError , proto.type == .protocolError {
+                Log("아무것도 하지 않는다")
+                self.updateState(.closed)
+                
+            }else if self.state == .starting {
+                self.triggerDelayedReconnect()
+            }else if !self.state.tryClose {
+                self.updateState(.closed)
+                self.triggerDelayedReconnect()
+            }
+        }*/
+        // MARK: HTTPUpgradeError 반환 받을시 무조건 엔진 이니셜 갱신 해야 connected됨
+        guard  let authError = e as? HTTPUpgradeError, isExpiredAccesstoken(authError)  else {
+            
+            guard !self.state.tryClose  else {
+                return
+            }
+            self.updateState(.closed)
+            
+            guard let proto = e as? WSError , proto.type == .protocolError else {
+                self.triggerDelayedReconnect()
+                return
+            }
+            Log("아무것도 하지 않는다")
+           
+            return
+        }
+        /*guard (e as? HTTPUpgradeError) != nil else {
+            return
+        }*/
+        
+        let currentRetryInterval = reconnectTimer?.currentRetryInterval ?? RECONNECT_TIMER
+        self.reconnectTimer?.stop()
+        self.updateState(.closed)
+        self.socket = nil
+        // accesstoken 재발급
+        self.commitInitial()
+        self.reconnectTimer?.currentRetryInterval = currentRetryInterval
+        self.triggerDelayedReconnect()
     }
 }
 extension WebSocketManager   {
     var requiresTearDown : Bool {
-        return self.state != .closed && self.state != .starting
+        return self.state.requiresTearDown
     }
+
 }
 extension WebSocketManager  :  WebSocketDelegate {
     
@@ -194,8 +258,10 @@ extension WebSocketManager  :  WebSocketDelegate {
         
         switch error {
         case .notAnUpgrade(let ercode, _):
-            // expiredAccesstoken
-            return ercode == 401
+            // expiredAccesstoken == 401
+            // ercode == 401
+            // notAnUpgrade(429
+            return ercode == 401 || ercode == 429
         case .invalidData:
             return false
         }
@@ -221,39 +287,67 @@ extension WebSocketManager  :  WebSocketDelegate {
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
         case .connected(let headers):
+            self.error = nil
             self.updateState(.connected)
             self.reconnectTimer?.resetRetryInterval()
             Log("websocket is connected: \(headers)")
         case .disconnected(let reason, let code):
             
             Log("websocket is disconnected: \(reason) with code: \(code)")
-            if self.state != .closing {
+            let current = self.state
+            self.updateState(.closed)
+            if current != .closing {
                 // 앱에서 disconnect 한게 아니면~
                 self.triggerDelayedReconnect()
             }
-            self.updateState(.closed)
+            break
         case .text(let string):
             Log("Received text: \(string)")
-            
+            break
         case .binary(let data):
             Log("Received data: \(data.count)")
             let str = String(decoding: data, as: UTF8.self)
             Log(str)
+            break
         case .ping(_):
             break
         case .pong(_):
             break
         case .viabilityChanged(_):
             break
-        case .reconnectSuggested(_):
+        case .reconnectSuggested(let m):
+            Log("websocket is reconnectSuggested:\(m)")
             break
         case .cancelled:
-             self.updateState(.closed)
-        case .error(let error):
+            Log("websocket is cancelled")
+            
+            guard self.error == nil, !self.state.tryClose else {
+                return
+            }
+            self.updateState(.closed)
+            self.triggerDelayedReconnect()
            
-            self.updateState(.error(error))
-
+            break
         case .peerClosed:
+            Log("websocket is peerClosed")
+            
+            guard self.error == nil, !self.state.tryClose else {
+                return
+            }
+            self.updateState(.closed)
+            self.triggerDelayedReconnect()
+            
+            break
+        case .error(let error):
+            let logstring = {
+                if let e = error {
+                   return String(describing: e)
+                }else{
+                   return "error empty"
+                }
+            }()
+            Log("websocket is error:\n \(logstring )")
+            self.updateState(.error(error))
             break
         }
     }

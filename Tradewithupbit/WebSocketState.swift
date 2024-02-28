@@ -17,6 +17,20 @@ public enum WebSocketSessionState  {
 }
 
 extension WebSocketSessionState : Equatable {
+ 
+    var tryClose : Bool {
+        guard self.requiresTearDown else {
+            return true
+        }
+        return self == .closing
+    }
+    var tryConnected : Bool {
+        return self == .connected || self == .connecting
+    }
+    var requiresTearDown : Bool {
+        return self != .closed && self != .starting
+    }
+
     public static func == (lhs: WebSocketSessionState, rhs: WebSocketSessionState) -> Bool {
         switch (lhs, rhs) {
         case (.starting, .starting),

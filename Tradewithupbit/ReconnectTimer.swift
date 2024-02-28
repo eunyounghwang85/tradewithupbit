@@ -9,25 +9,27 @@ import Foundation
 import UIKit
 
 public let RECONNECT_TIMER:TimeInterval =  1.0
-public let RECONNECT_TIMER_MAX_DEFAULT :TimeInterval = 64.0
+public let RECONNECT_TIMER_MAX_DEFAULT :TimeInterval = 5.0
 
 class ReconnectTimer : NSObject {
     
-    lazy var retryInterval:TimeInterval = .zero
-    lazy var currentRetryInterval:TimeInterval = .zero
-    lazy var maxRetryInterval : TimeInterval = .zero
+    var retryInterval:TimeInterval!
+    var currentRetryInterval:TimeInterval!
+    var maxRetryInterval : TimeInterval!
     lazy var reconnetBlock:(()->Void) = {}
     lazy var timer:Timer? = nil {
         willSet{
             guard let timer = timer else {
                 return
             }
+            Log("timer invalidate")
             timer.invalidate()
         }
         didSet{
             guard let timer = timer else {
                 return
             }
+            Log("timer statrt \(timer.timeInterval)")
             RunLoop.current.add(timer, forMode: .common)
         }
     }
@@ -42,14 +44,18 @@ class ReconnectTimer : NSObject {
     }
     
     deinit {
+        self.reconnetBlock = {}
         self.stop()
     }
     
     @objc func resetRetryInterval(){
+        
+        Log("resetRetryInterval")
         self.currentRetryInterval = self.retryInterval
     }
     
     @objc func schedule(){
+       
         self.timer = Timer.scheduledTimer(timeInterval:self.currentRetryInterval, target: self, selector:#selector(self.reconnect), userInfo: nil, repeats: false)
     }
     
@@ -58,10 +64,15 @@ class ReconnectTimer : NSObject {
     }
     
     @objc func reconnect(){
+
         self.stop()
+        
         if self.currentRetryInterval < self.maxRetryInterval {
             self.currentRetryInterval *= 2
         }
+        
+        Log("sreconnect: \(currentRetryInterval)")
+        
         self.reconnetBlock()
     }
 }
