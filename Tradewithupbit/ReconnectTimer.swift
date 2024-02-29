@@ -16,64 +16,66 @@ class ReconnectTimer : NSObject {
     var retryInterval:TimeInterval!
     var currentRetryInterval:TimeInterval!
     var maxRetryInterval : TimeInterval!
-    lazy var reconnetBlock:(()->Void) = {}
-    lazy var timer:Timer? = nil {
+    weak var timer:Timer? {
         willSet{
             guard let timer = timer, timer.isValid else {
                 return
             }
-            Log("timer invalidate")
+        
             timer.invalidate()
         }
         didSet{
             guard let timer = timer else {
                 return
             }
-            Log("timer statrt \(timer.timeInterval)")
-            RunLoop.current.add(timer, forMode: .common)
+            RunLoop.main.add(timer, forMode: .common)
         }
     }
     
-    required init(_ retryInterval:TimeInterval, _ maxRetryInterval:TimeInterval, _ reconnetBlock:@escaping(()->Void)) {
+    required init(_ retryInterval:TimeInterval, _ maxRetryInterval:TimeInterval) {
         super.init()
         self.retryInterval  = retryInterval
         self.currentRetryInterval = retryInterval
         self.maxRetryInterval = maxRetryInterval
-        self.reconnetBlock = reconnetBlock
         
     }
     
     deinit {
-        self.reconnetBlock = {}
+     
         self.timer = nil
     }
     
     @objc func resetRetryInterval(){
-        
-        Log("resetRetryInterval")
+    
         self.currentRetryInterval = self.retryInterval
     }
     
-    @objc func schedule(){
-       
-        self.timer = Timer.scheduledTimer(timeInterval:self.currentRetryInterval, target: self, selector:#selector(self.reconnect), userInfo: nil, repeats: false)
+    @objc func schedule(_ reconnetBlock:@escaping(()->Void)){
+        /*
+        if !Thread.isMainThread{
+            DispatchQueue.main.async {
+                self.schedule(reconnetBlock)
+            }
+        }*/
+      
+        Log("new Timer initail: \(String(describing: self.currentRetryInterval))")
+        self.timer =  Timer.scheduledTimer(withTimeInterval: self.currentRetryInterval, repeats: false) {  [weak self] t in
+            if t.isValid {
+                t.invalidate()
+            }
+            guard let self = self else {return}
+            Log("scheduled valid stop")
+            if self.currentRetryInterval < self.maxRetryInterval {
+                self.currentRetryInterval *= 2
+            }
+            
+            reconnetBlock()
+        }
+     
     }
     
     @objc func stop(){
         Log("stop timer")
         self.timer = nil
-    }
-    
-    @objc func reconnect(){
-
-        self.timer = nil
-        
-        if self.currentRetryInterval < self.maxRetryInterval {
-            self.currentRetryInterval *= 2
-        }
-        
-        Log("sreconnect: \(String(describing:currentRetryInterval))")
-        
-        self.reconnetBlock()
     }
 }
