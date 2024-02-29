@@ -37,7 +37,7 @@ class WebSocketManager : NSObject {
     var foregroundReconnection : ForegroundReconnection!
     
     lazy var state : WebSocketSessionState = .closed
-    // error 만관리 할것이므로 예외처리 없음 Never
+    // error 만관리 할것이므로 예외처리 없음 Never -> 가장 최근 value로 업데이트 됨, value값 접근가능
     lazy var error: CurrentValueSubject<Error, Never> = CurrentValueSubject<Error, Never>(initalError.none)
 
     
@@ -52,8 +52,7 @@ class WebSocketManager : NSObject {
             guard let old = socket  else {
                 return
             }
-            //old.callbackQueue = DispatchQueue.main
-            //old.delegate = nil
+        
             old.forceDisconnect()
         }
         
@@ -61,10 +60,9 @@ class WebSocketManager : NSObject {
             guard let s = socket else {
                 return
             }
-           // let barrierQueue = DispatchQueue(label: MAINSIGN.appending(".heyWebSocket.Barrier.\(barrier).DispatchQueue"), attributes:.concurrent)
-           // barrier += 1
             
-           // s.callbackQueue = barrierQueue
+            let barrierQueue = DispatchQueue(label: MAINSIGN.appending(".heyWebSocket.Barrier.DispatchQueue"), attributes:.concurrent)
+            s.callbackQueue = barrierQueue
             self.onEventRecive(s)
          
         }
@@ -88,7 +86,6 @@ class WebSocketManager : NSObject {
                 openSocket()
             }
         }
-        
         guard  socket == nil  else {
             return
         }
@@ -114,6 +111,7 @@ class WebSocketManager : NSObject {
         self.updateState(.starting)
         self.connectToInternal()
     }
+    
     func triggerDelayedReconnect(){
         
         guard self.foregroundReconnection.appState == .applicationDidBecome, let r = self.reconnectTimer else {
@@ -156,6 +154,7 @@ class WebSocketManager : NSObject {
         self.error.send(initalError.none)
         self.reconnectTimer?.stop()
         self.reconnectTimer?.resetRetryInterval()
+        // MARK: 백그라운드에서 올라왔을 경우 일단 무조건 재시작
         self.reconnect()
     }
     func closeSocket(_ isforce:Bool=false) {
@@ -200,89 +199,35 @@ class WebSocketManager : NSObject {
         } receiveValue: { [weak self] e in
             
             guard let self else { return }
-            Task { @MainActor in
-                
-                guard (e as? initalError) == nil else {
-                    // connecting 호출전 connected 하고 나서
+            guard (e as? initalError) == nil else {
+                // connecting 호출전 connected 하고 나서
+                return
+            }
+            
+            Log("websocket recived error:\n \(String(describing: e) )")
+           
+            guard  self.isExpiredAccesstoken(e)  else {
+               
+                guard !self.state.tryClose  else {
                     return
                 }
                 
-                Log("websocket recived error:\n \(String(describing: e) )")
-               
-                guard  self.isExpiredAccesstoken(e)  else {
-                   
-                    guard !self.state.tryClose  else {
-                        return
-                    }
-                    
-                    self.updateState(.closed)
-                    self.triggerDelayedReconnect()
-                 
-                   return
-                }
-              
-                self.reInitialwhenfired()
-                
+                self.updateState(.closed)
+                self.triggerDelayedReconnect()
+             
+               return
             }
+          
+            self.reInitialwhenfired()
        
         }.store(in: &cancelBag)
         
     }
     func updateState(_ newState:WebSocketSessionState) {
        
-        guard case WebSocketSessionState.error(let e) = newState else {
-            Log("updateState:\(newState)")
-            // error는 반영하지 않음
-            self.state = newState
-            return
-        }
+        Log("updateState:\(newState)")
+        self.state = newState
         
-        
-       
-    
-        // error 발생할경우 소켓클로즈 처리
-        
-        
-       /* defer {
-            if let proto = e as? WSError , proto.type == .protocolError {
-                Log("아무것도 하지 않는다")
-                self.updateState(.closed)
-                
-            }else if self.state == .starting {
-                self.triggerDelayedReconnect()
-            }else if !self.state.tryClose {
-                self.updateState(.closed)
-                self.triggerDelayedReconnect()
-            }
-        }*/
-        // MARK: HTTPUpgradeError 반환 받을시 무조건 엔진 이니셜 갱신 해야 connected됨
-        guard  let authError = e as? HTTPUpgradeError, isExpiredAccesstoken(authError)  else {
-            
-            guard !self.state.tryClose  else {
-                return
-            }
-            self.updateState(.closed)
-            
-            guard let proto = e as? WSError , proto.type == .protocolError else {
-                self.triggerDelayedReconnect()
-                return
-            }
-            Log("아무것도 하지 않는다")
-           
-            return
-        }
-        /*guard (e as? HTTPUpgradeError) != nil else {
-            return
-        }*/
-        
-        let currentRetryInterval = reconnectTimer?.currentRetryInterval ?? RECONNECT_TIMER
-        self.reconnectTimer?.stop()
-        self.updateState(.closed)
-        self.socket = nil
-        // accesstoken 재발급
-        self.commitInitial()
-        self.reconnectTimer?.currentRetryInterval = currentRetryInterval
-        self.triggerDelayedReconnect()
     }
 }
 extension WebSocketManager   {
@@ -308,6 +253,7 @@ extension WebSocketManager   {
     func isExpiredAccesstoken<T> (_ error:T) -> Bool {
         
         if let error  = error as? HTTPUpgradeError, case .notAnUpgrade(_, _) = error {
+            // notAnUpgrade 들어오면 무조건 다해주기
             return true
             /*
             switch error {

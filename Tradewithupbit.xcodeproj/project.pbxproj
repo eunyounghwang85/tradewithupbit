@@ -30,6 +30,7 @@
 		55784F1D2B8C444A00B8EA5A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 55784F1C2B8C444A00B8EA5A /* Localizable.xcstrings */; };
 		55784F212B8C44CD00B8EA5A /* editView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55784F202B8C44CD00B8EA5A /* editView.swift */; };
 		55784F232B8D637300B8EA5A /* ex+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55784F222B8D637300B8EA5A /* ex+String.swift */; };
+		55784F252B90647500B8EA5A /* requestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55784F242B90647500B8EA5A /* requestManager.swift */; };
 		557DDE8F2B6723B200BC61F8 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 557DDE8E2B6723B200BC61F8 /* Starscream */; };
 		557DDE912B6723FF00BC61F8 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */; };
 /* End PBXBuildFile section */
@@ -82,6 +83,7 @@
 		55784F1C2B8C444A00B8EA5A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		55784F202B8C44CD00B8EA5A /* editView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editView.swift; sourceTree = "<group>"; };
 		55784F222B8D637300B8EA5A /* ex+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ex+String.swift"; sourceTree = "<group>"; };
+		55784F242B90647500B8EA5A /* requestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestManager.swift; sourceTree = "<group>"; };
 		557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +144,7 @@
 				55784F222B8D637300B8EA5A /* ex+String.swift */,
 				555368A62B68AA5E0074DAA1 /* WebSocketState.swift */,
 				557DDE902B6723FF00BC61F8 /* WebSocketManager.swift */,
+				55784F242B90647500B8EA5A /* requestManager.swift */,
 				555368A82B68BB170074DAA1 /* ReconnectTimer.swift */,
 				555368AA2B68C0880074DAA1 /* ForegroundReconnection.swift */,
 				555368A12B6794AA0074DAA1 /* upbitApi */,
@@ -359,6 +362,7 @@
 				555368A52B68799C0074DAA1 /* ex+Params.swift in Sources */,
 				555368AB2B68C0880074DAA1 /* ForegroundReconnection.swift in Sources */,
 				26B76AC225DB68B2007098BB /* Tradewithupbit.xcdatamodeld in Sources */,
+				55784F252B90647500B8EA5A /* requestManager.swift in Sources */,
 				555368A32B67972C0074DAA1 /* marketParam.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

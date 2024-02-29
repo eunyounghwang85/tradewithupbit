@@ -37,13 +37,23 @@ enum hlocalizeTest : String, Identifiable, CaseIterable{
         }
     }*/
 }
-
+/*
+@main
+struct mockupComponentApp: App {
+  var body: some Scene {
+    WindowGroup {
+        editView()
+    }
+  }
+}
+*/
 struct editView: View {
     
     @State var isFollowed = false
     var title = "heyTitle".localized
     
     var body: some View {
+     
         ZStack{
             Button(action: {
                 isFollowed = !isFollowed
