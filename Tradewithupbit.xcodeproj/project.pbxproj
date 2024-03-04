@@ -29,6 +29,8 @@
 		555368AB2B68C0880074DAA1 /* ForegroundReconnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555368AA2B68C0880074DAA1 /* ForegroundReconnection.swift */; };
 		557045DD2B9548A700C32D76 /* requestManager+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557045DC2B9548A700C32D76 /* requestManager+Combine.swift */; };
 		557045DF2B9548BA00C32D76 /* requestManager+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557045DE2B9548BA00C32D76 /* requestManager+Concurrency.swift */; };
+		557045E12B95623A00C32D76 /* eventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557045E02B95623A00C32D76 /* eventLogger.swift */; };
+		557045E42B9562F000C32D76 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 557045E32B9562F000C32D76 /* Alamofire */; };
 		55784F1D2B8C444A00B8EA5A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 55784F1C2B8C444A00B8EA5A /* Localizable.xcstrings */; };
 		55784F212B8C44CD00B8EA5A /* editView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55784F202B8C44CD00B8EA5A /* editView.swift */; };
 		55784F232B8D637300B8EA5A /* ex+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55784F222B8D637300B8EA5A /* ex+String.swift */; };
@@ -82,6 +84,7 @@
 		555368AA2B68C0880074DAA1 /* ForegroundReconnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForegroundReconnection.swift; sourceTree = "<group>"; };
 		557045DC2B9548A700C32D76 /* requestManager+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "requestManager+Combine.swift"; sourceTree = "<group>"; };
 		557045DE2B9548BA00C32D76 /* requestManager+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "requestManager+Concurrency.swift"; sourceTree = "<group>"; };
+		557045E02B95623A00C32D76 /* eventLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eventLogger.swift; sourceTree = "<group>"; };
 		55784F1A2B8C441B00B8EA5A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		55784F1B2B8C441B00B8EA5A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		55784F1C2B8C444A00B8EA5A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -96,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557045E42B9562F000C32D76 /* Alamofire in Frameworks */,
 				5553689E2B678A2E0074DAA1 /* SwiftJWT in Frameworks */,
 				557DDE8F2B6723B200BC61F8 /* Starscream in Frameworks */,
 			);
@@ -151,6 +155,7 @@
 				55784F242B90647500B8EA5A /* requestManager.swift */,
 				557045DC2B9548A700C32D76 /* requestManager+Combine.swift */,
 				557045DE2B9548BA00C32D76 /* requestManager+Concurrency.swift */,
+				557045E02B95623A00C32D76 /* eventLogger.swift */,
 				555368A82B68BB170074DAA1 /* ReconnectTimer.swift */,
 				555368AA2B68C0880074DAA1 /* ForegroundReconnection.swift */,
 				555368A12B6794AA0074DAA1 /* upbitApi */,
@@ -231,6 +236,7 @@
 			packageProductDependencies = (
 				557DDE8E2B6723B200BC61F8 /* Starscream */,
 				5553689D2B678A2E0074DAA1 /* SwiftJWT */,
+				557045E32B9562F000C32D76 /* Alamofire */,
 			);
 			productName = Tradewithupbit;
 			productReference = 26B76AB425DB68B2007098BB /* Tradewithupbit.app */;
@@ -307,6 +313,7 @@
 			packageReferences = (
 				557DDE8D2B6723B200BC61F8 /* XCRemoteSwiftPackageReference "Starscream" */,
 				5553689C2B678A2E0074DAA1 /* XCRemoteSwiftPackageReference "Swift-JWT" */,
+				557045E22B9562F000C32D76 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 26B76AB525DB68B2007098BB /* Products */;
 			projectDirPath = "";
@@ -372,6 +379,7 @@
 				26B76AC225DB68B2007098BB /* Tradewithupbit.xcdatamodeld in Sources */,
 				55784F252B90647500B8EA5A /* requestManager.swift in Sources */,
 				555368A32B67972C0074DAA1 /* marketParam.swift in Sources */,
+				557045E12B95623A00C32D76 /* eventLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -722,6 +730,14 @@
 				minimumVersion = 4.0.1;
 			};
 		};
+		557045E22B9562F000C32D76 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
 		557DDE8D2B6723B200BC61F8 /* XCRemoteSwiftPackageReference "Starscream" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream.git";
@@ -737,6 +753,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5553689C2B678A2E0074DAA1 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
 			productName = SwiftJWT;
+		};
+		557045E32B9562F000C32D76 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 557045E22B9562F000C32D76 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		557DDE8E2B6723B200BC61F8 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;

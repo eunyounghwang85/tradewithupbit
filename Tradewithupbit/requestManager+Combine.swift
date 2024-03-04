@@ -7,10 +7,14 @@
 
 import Foundation
 import Combine
+import Alamofire
+
 
 extension requestManager {
     
     func performRequest(_ request: URLRequest) -> AnyPublisher<Data, RestError> {
+        
+     
         return session.dataTaskPublisher(for: request)
             .tryMap { data, response in
                 guard let httpResponse = response as? HTTPURLResponse else {
@@ -32,5 +36,30 @@ extension requestManager {
             } // Returns: An ``AnyPublisher`` wrapping this publisher.
             .eraseToAnyPublisher()
     }
+    
+    // MARK: alamofire Request
+    func performArequest<T:Decodable>(_ request: URLRequestConvertible, _ result:T.Type) -> AnyPublisher<T, RestError> {
+        
+        return aF.request(request)
+            .validate()
+            .publishDecodable(type:result)
+            .result()
+            .tryMap { r in
+                switch r {
+                case .success(let success):
+                    return success
+                case .failure(let failure):
+                    throw RestError.withAlamo(failure)
+                }
+            }.mapError { error in
+                if let networkingError = error as? RestError {
+                    return networkingError
+                } else {
+                    return .unknown(error)
+                }
+            }.eraseToAnyPublisher()
+        
+    }
+    
 
 }
