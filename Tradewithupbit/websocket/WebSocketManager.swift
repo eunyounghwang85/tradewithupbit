@@ -79,19 +79,22 @@ class WebSocketManager : NSObject {
         self.closeSocket(true)
         NotificationCenter.default.removeObserver(self)
     }
-    func commitInitial(_ start:Bool = false){
+    func commitInitial(_ start:Bool = false) {
         
         defer {
             if start {
                 openSocket()
             }
         }
-        guard  socket == nil  else {
+        
+       
+        guard  socket == nil, let url = try? upbitPath.socketV1.url()   else {
             return
         }
         
         self.updateState(.starting)
-        var request = URLRequest(url: URL(string: "wss://api.upbit.com/websocket/v1")!)
+      
+        var request = URLRequest(url:url)
         request.timeoutInterval = 60
         
         if isauthorizationToken {

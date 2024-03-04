@@ -13,6 +13,7 @@ enum RestError: Error {
     case unknown(Error)
     case withAlamo(AFError)
     case failedresponse
+    case urlpathWrong
 }
 
 let aF :  Session =  {
@@ -32,6 +33,8 @@ struct requestManager  {
     }
     
     init (){
+        
+        // alamofire rest와 비교하기 위함 으로 일단 유지
         self.session = aF.session
     }
 
