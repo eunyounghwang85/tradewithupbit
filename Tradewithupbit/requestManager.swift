@@ -6,3 +6,22 @@
 //
 
 import Foundation
+
+
+enum RestError: Error {
+    case invalid(Int)
+    case unknown(Error)
+    case failedresponse
+}
+
+
+
+struct requestManager  {
+    
+    let session: URLSession
+
+    init(session: URLSession = URLSession.shared) {
+      self.session = session
+    }
+
+}
