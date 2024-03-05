@@ -10,8 +10,6 @@ import Alamofire
 
 struct eventLogger: EventMonitor {
     
-    let queue = DispatchQueue(label: "requestManagerLogger")
-    
     func requestDidFinish(_ request: Request) {
         Log("🛰 NETWORK Reqeust LOG")
         Log(request.description)
