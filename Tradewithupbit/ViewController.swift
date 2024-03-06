@@ -16,9 +16,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        guard let editv = uiEditView.view else {
+        guard let editv = uimarketNavigation.view else {
             return
         }
+       // self.view = editv
         editv.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(editv)
         var constrains:[NSLayoutConstraint] = [NSLayoutConstraint]()
@@ -31,6 +32,15 @@ class ViewController: UIViewController {
 extension  ViewController {
     var uiEditView :  UIViewController {
         return UIHostingController(rootView: editView())
+    }
+    
+    var uimarketNavigation:  UINavigationController {
+        // main을 navigation 으로 구성 하므로 UIkit 타입을 일치시켜준다.
+        return UINavigationController(rootViewController:uimarketRootView)
+    }
+    
+    var uimarketRootView :  UIViewController {
+        return UIHostingController(rootView: marketlistView())
     }
 }
 

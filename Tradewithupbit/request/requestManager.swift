@@ -27,15 +27,17 @@ let aF :  Session =  {
 struct requestManager  {
     
     let session: URLSession
+    let restInfo : urlRequest
 
-    init(session: URLSession = URLSession.shared) {
-      self.session = session
+    init(session: URLSession = URLSession.shared, _ restInfo:urlRequest) {
+        self.session = session
+        self.restInfo = restInfo
     }
     
-    init (){
-        
+    init (_ restInfo:urlRequest){
         // alamofire rest와 비교하기 위함 으로 일단 유지
-        self.session = aF.session
+        self.init(session: aF.session, restInfo)
+     
     }
 
 }

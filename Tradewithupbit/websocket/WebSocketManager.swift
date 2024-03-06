@@ -6,9 +6,11 @@
 //
 
 import Foundation
-import UIKit
 import Starscream
 import Combine
+
+
+
 
 enum initalError: Error {
     case none
@@ -44,7 +46,6 @@ class WebSocketManager : NSObject {
     
     var cancelBag: Set<AnyCancellable> = []
     
-    lazy var barrier:Int = 1
     
     lazy var socket : WebSocket? = nil {
             
@@ -67,7 +68,7 @@ class WebSocketManager : NSObject {
          
         }
     }
-  
+ 
     override init() {
         super.init()
         foregroundReconnection = ForegroundReconnection(sessionManager: self)
@@ -193,8 +194,7 @@ class WebSocketManager : NSObject {
     }
    
     func errorManager() {
-        
-  
+    
         self.error.sink {
             _ in
             // Log("complite: \(c)")
