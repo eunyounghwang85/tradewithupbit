@@ -48,12 +48,15 @@ struct mockupComponentApp: App {
 }
 */
 struct editView: View {
-    
-    @State var isFollowed = false
+ //   @Binding var detailMarket : marketCode?
+   
+    @State private var isFollowed = false
     var title = "heyTitle".localized
+    @Binding var detailMarket : marketCode?
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-     
         ZStack{
             Button(action: {
                 isFollowed = !isFollowed
@@ -82,16 +85,26 @@ struct editView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .background(in:.capsule)
                 //.background(ignoresSafeAreaEdges: .all)
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading:backButton(title: detailMarket?.korean_name ?? ""){
+                    Task{
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                })
         }
-      
+        //detailMarket?.korean_name ?? ""
     }
     
     func actionItem(){
-        WebSocketManager.shared.sendMesseage()
+        guard let codes = detailMarket?.market else {
+            return
+        }
+        
+        WebSocketManager.shared.sendMesseage([codes])
     }
     
 }
 
 #Preview {
-    editView().environment(\.locale, .init(identifier: "ko"))
+    editView(detailMarket:.constant(nil)).environment(\.locale, .init(identifier: "ko"))
 }

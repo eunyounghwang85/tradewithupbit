@@ -38,7 +38,8 @@
 		557045F52B9709D000C32D76 /* marketlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557045F42B9709D000C32D76 /* marketlistView.swift */; };
 		557045F72B9709E500C32D76 /* listRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557045F62B9709E500C32D76 /* listRow.swift */; };
 		557045FB2B980D3200C32D76 /* Presenter + SharedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557045FA2B980D3200C32D76 /* Presenter + SharedDataModel.swift */; };
-		557045FD2B980F5800C32D76 /* getRests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557045FC2B980F5800C32D76 /* getRests.swift */; };
+		557045FD2B980F5800C32D76 /* getRests+upbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557045FC2B980F5800C32D76 /* getRests+upbit.swift */; };
+		557046012B99A42100C32D76 /* depthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557045FF2B999EEE00C32D76 /* depthView.swift */; };
 		55784F1D2B8C444A00B8EA5A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 55784F1C2B8C444A00B8EA5A /* Localizable.xcstrings */; };
 		55784F212B8C44CD00B8EA5A /* editView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55784F202B8C44CD00B8EA5A /* editView.swift */; };
 		55784F232B8D637300B8EA5A /* ex+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55784F222B8D637300B8EA5A /* ex+String.swift */; };
@@ -100,7 +101,8 @@
 		557045F42B9709D000C32D76 /* marketlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = marketlistView.swift; sourceTree = "<group>"; };
 		557045F62B9709E500C32D76 /* listRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listRow.swift; sourceTree = "<group>"; };
 		557045FA2B980D3200C32D76 /* Presenter + SharedDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Presenter + SharedDataModel.swift"; sourceTree = "<group>"; };
-		557045FC2B980F5800C32D76 /* getRests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getRests.swift; sourceTree = "<group>"; };
+		557045FC2B980F5800C32D76 /* getRests+upbit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "getRests+upbit.swift"; sourceTree = "<group>"; };
+		557045FF2B999EEE00C32D76 /* depthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = depthView.swift; sourceTree = "<group>"; };
 		55784F1A2B8C441B00B8EA5A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		55784F1B2B8C441B00B8EA5A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		55784F1C2B8C444A00B8EA5A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -166,10 +168,12 @@
 				26B76ABB25DB68B2007098BB /* ViewController.swift */,
 				55784F202B8C44CD00B8EA5A /* editView.swift */,
 				557045F42B9709D000C32D76 /* marketlistView.swift */,
+				557045FF2B999EEE00C32D76 /* depthView.swift */,
 				557045F62B9709E500C32D76 /* listRow.swift */,
 				557045E92B95A48F00C32D76 /* dataModel */,
 				557045E52B9598D900C32D76 /* websocket */,
 				557045E62B9598F300C32D76 /* request */,
+				557045FE2B99396200C32D76 /* upbitData */,
 				555368A12B6794AA0074DAA1 /* upbitApi */,
 				555368962B675E940074DAA1 /* private */,
 				555368872B67586C0074DAA1 /* util */,
@@ -227,7 +231,6 @@
 				555368A22B67972C0074DAA1 /* marketParam.swift */,
 				5553689F2B67908C0074DAA1 /* privacyString.swift */,
 				555368A42B68799C0074DAA1 /* ex+Params.swift */,
-				557045EE2B95B6A700C32D76 /* marketCode.swift */,
 			);
 			path = upbitApi;
 			sourceTree = "<group>";
@@ -250,8 +253,8 @@
 				557045DC2B9548A700C32D76 /* requestManager+Combine.swift */,
 				557045DE2B9548BA00C32D76 /* requestManager+Concurrency.swift */,
 				55784F242B90647500B8EA5A /* requestManager.swift */,
-				557045FC2B980F5800C32D76 /* getRests.swift */,
 				557045E72B95996800C32D76 /* urlRequest.swift */,
+				557045FC2B980F5800C32D76 /* getRests+upbit.swift */,
 			);
 			path = request;
 			sourceTree = "<group>";
@@ -263,6 +266,14 @@
 				557045FA2B980D3200C32D76 /* Presenter + SharedDataModel.swift */,
 			);
 			path = dataModel;
+			sourceTree = "<group>";
+		};
+		557045FE2B99396200C32D76 /* upbitData */ = {
+			isa = PBXGroup;
+			children = (
+				557045EE2B95B6A700C32D76 /* marketCode.swift */,
+			);
+			path = upbitData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -414,8 +425,9 @@
 				557045E82B95996800C32D76 /* urlRequest.swift in Sources */,
 				557045F12B95B73100C32D76 /* upbitPath.swift in Sources */,
 				55784F212B8C44CD00B8EA5A /* editView.swift in Sources */,
-				557045FD2B980F5800C32D76 /* getRests.swift in Sources */,
+				557045FD2B980F5800C32D76 /* getRests+upbit.swift in Sources */,
 				557045EF2B95B6A700C32D76 /* marketCode.swift in Sources */,
+				557046012B99A42100C32D76 /* depthView.swift in Sources */,
 				26B76ABC25DB68B2007098BB /* ViewController.swift in Sources */,
 				557045FB2B980D3200C32D76 /* Presenter + SharedDataModel.swift in Sources */,
 				557045F52B9709D000C32D76 /* marketlistView.swift in Sources */,
@@ -544,7 +556,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -600,7 +612,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -618,7 +630,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J9G7LUHM5U;
 				INFOPLIST_FILE = Tradewithupbit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -639,7 +651,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J9G7LUHM5U;
 				INFOPLIST_FILE = Tradewithupbit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

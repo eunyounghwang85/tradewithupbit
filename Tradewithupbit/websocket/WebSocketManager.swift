@@ -277,17 +277,17 @@ extension WebSocketManager   {
       
     }
     
-    func sendMesseage(){
+    func sendMesseage(_ putCodes:[String] = ["KRW-BTC"] ){
         guard self.state == .connected, let socket = self.socket else {
             return
         }
         var obje = marketParam(type: .ticker)
         if isauthorizationToken {
-            // 전체시세 빈배열
-            obje.codes = ["KRW-BTC"]
+            // 전체시세 빈배열, ["KRW-BTC"]
+            obje.codes = putCodes
         }else{
-            // codes 필수로 1개이상
-            obje.codes = ["KRW-BTC"]
+            // codes 필수로 1개이상, ["KRW-BTC"]
+            obje.codes = putCodes
             
         }
        
