@@ -11,7 +11,7 @@ import SwiftUI
 struct marketlistView: View {
     
     @StateObject private var model  = SharedDataModel.shared
-    @State var presentedMarket: [marketCode] = []
+    @State var stack: NavigationPath = NavigationPath()
    // @State private var list = SharedDataModel.shared.marketCodes
    /* @SceneStorage("selectedItem") private var selectedItem: String?
     var selectedID: Binding<marketCode?> {
@@ -22,27 +22,26 @@ struct marketlistView: View {
             set: { selectedItem = $0?.id }
         )
     }*/
-    
+
     @State private var pushNextView = false
     var title:String = "마켓종목"
-   
+  
     var body: some View {
-        NavigationStack(path: $presentedMarket){ // rootview
+        NavigationStack(path: $stack){ // rootview
             List(model.marketCodes){ market in
                // Text(market.korean_name)
                 NavigationLink(
                     market.korean_name,
                     value: market
                 )
-                .padding(EdgeInsets(top: 15, leading: 5, bottom: 15, trailing: 5))
-                .gesture(TapGesture().onEnded {
-                   // presentedMarket.removeAll()
-                    presentedMarket.append(market)
-                })
                 .navigationDestination(for: marketCode.self) { market in
-                    editView(detailMarket:.constant(market))
+                    editView(stack:$stack, detailMarket:.constant(market))
+                        
                     
-                }
+                }.padding(EdgeInsets(top: 15, leading: 5, bottom: 15, trailing: 5))
+                /*.gesture(TapGesture().onEnded {
+                    presentedMarket.append(market)
+                })*/
                 /*.onChange(of: presentedMarket) { _ in
                     
                     guard let selected = presentedMarket.last else { return }

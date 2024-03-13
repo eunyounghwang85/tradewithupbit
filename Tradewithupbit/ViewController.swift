@@ -32,7 +32,7 @@ class ViewController: UIViewController {
 extension  ViewController {
     var uiEditView :  UIViewController {
         //marketCode()
-        return UIHostingController(rootView: editView(detailMarket:.constant(nil)))
+        return UIHostingController(rootView: editView(stack:.constant(NavigationPath()), detailMarket:.constant(nil)))
     }
     
     var uimarketNavigation:  UINavigationController {
